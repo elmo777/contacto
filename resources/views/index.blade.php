@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+
   <div class="container mt-4">
     <h1>Administrador - Tabla de Usuarios</h1>
     <!-- Barra de búsqueda -->
@@ -17,6 +18,9 @@
       <input type="text" class="form-control" id="searchInput" placeholder="Buscar usuario">
     </div>
     <!-- Tabla de usuarios -->
+    <a href="http://127.0.0.1:8000/create" class="btn btn-sm btn-success me-1" style="float:right">
+                <i class="fas fa-save"></i> Agregar
+            </a>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -32,20 +36,27 @@
       </thead>
       <tbody>
        <tr>
-            
+       @foreach($usuarios as $usuario)
+        <tr>
+        <td>{{ $usuario->id }}</td>
+            <td>{{ $usuario->nombres }}</td>
+            <td>{{ $usuario->apellidos }}</td>
+            <td>{{ $usuario->telefono }}</td>
+            <td>{{ $usuario->direccion }}</td>
+            <td>{{ $usuario->email }}</td>
           <td class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary me-1">
-              <i class="fas fa-edit"></i> Editar
-            </button>
-            <a href="{{ route('usuarios.create') }}" class="btn btn-sm btn-success me-1">
-                <i class="fas fa-save"></i> Agregar
+           
+            <a href="{{ route('usuarios.crear',$usuario->id) }}" class="btn btn-sm btn-primary me-1">
+                <i class="fas fa-edit"></i> Editar
             </a>
-            <button type="button" class="btn btn-sm btn-danger">
-              <i class="fas fa-trash"></i> Eliminar
-            </button>
+          
+            <a href="{{ route('usuarios.destroy',$usuario->id) }}" class="btn btn-sm btn-danger">
+                <i class="fas fa-trash"></i> Eliminar
+            </a>
+            
           </td>
         </tr>
-        
+        @endforeach
         <!-- Agrega más filas de usuarios aquí -->
       </tbody>
     </table>

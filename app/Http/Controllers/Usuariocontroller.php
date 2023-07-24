@@ -25,8 +25,8 @@ class UsuarioController extends Controller
 
     public function show($id)
     {
-    $index = usuario::find($id);  
-    return view('index', compact('index'));    
+    // $index = usuario::find($id);  
+    // return view('index', compact('index'));    
     }
 
     /**
@@ -48,15 +48,20 @@ class UsuarioController extends Controller
         if ($guardar->fails()) {
             return redirect()->back()->withErrors($guardar)->withInput();
         }
-        $usuarios = [
+        $datos = [
             'nombres' => $request->input('nombres'),
             'apellidos' => $request->input('apellidos'),
             'telefono' => $request->input('telefono'),
             'email' => $request->input('email'),
             'direccion' => $request->input('direccion'),
         ];
+
         
-        return redirect()->to('/index');
+        $usuarios = new usuario();
+        $usuarios->fill($datos);
+        $usuarios->save();
+        
+        return redirect()->to('index');
     }
 
     /**
@@ -67,17 +72,40 @@ class UsuarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, $id)
     {
-        //
+        
+        $guardar = validator::make($request->all(),[
+            'nombres' => 'required',
+            'apellidos' => 'required',
+            'telefono' => 'required',
+        ]);
+        if ($guardar->fails()) {
+            return redirect()->back()->withErrors($guardar)->withInput();
+        }
+        $datos = [
+            'nombres' => $request->input('nombres'),
+            'apellidos' => $request->input('apellidos'),
+            'telefono' => $request->input('telefono'),
+            'email' => $request->input('email'),
+            'direccion' => $request->input('direccion'),
+        ];
+
+        
+        $usuarios = new usuario();
+        $usuarios->fill($datos);
+        $usuarios->save();
+        
+        return redirect()->to('editar');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function crear( string $id)
     {
-        //
+        $data = usuario::find($id);
+        return view ('editar',compact('data'));
     }
 
     /**
@@ -88,7 +116,7 @@ class UsuarioController extends Controller
 
     if ($destruir) {
         $destruir->delete();
-        return redirect()->to('/index');
+        return redirect()->to('index');
     }
 }
 }
