@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario</title>
+    <title>Nueva Categoria</title>
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
     <!-- Font Awesome Icons -->
@@ -11,31 +11,23 @@
 </head>
 <body class="antialiased">
     <div class="container mt-4">
-        <h1>Editar Usuario</h1>
-        <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST">
+        <h1>Nueva Categoria</h1>
+        <form action="{{ route('categorias.store') }}" method="POST">
             @csrf
-            @method('PUT')
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" required value="{{ $usuario->name }}">
+                <input type="text" class="form-control" placeholder="Nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Descripcion" name="descripcion" required>
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" placeholder="Precio" name="precio" required >
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" placeholder="Stock" name="stock">
             </div>
             
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required value="{{ $usuario->email }}">
-
-
-            </div>
-            <select class="form-select form-select-sm" aria-label="small select example" style="margin-bottom 20px" name="roles">
-            <option selected> Escoja un rol </option>
-            @foreach ($roles as $rol)
-            <option value="{{ $rol->id }}"> {{$rol->name}}</option>
-            @endforeach
-            </select>
-            <br>
-            <br>
-            <br>
-                <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                 <i class="fas fa-save"></i> Guardar
             </button>
         </form>
