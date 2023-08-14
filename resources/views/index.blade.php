@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,15 +11,16 @@
 <body>
 
   <div class="container mt-4">
-    <h1>Administrador - Tabla de Usuarios</h1>
+    <h1>Administrador - Control de Usuarios</h1>
     <!-- Barra de búsqueda -->
     <div class="mb-3">
       <input type="text" class="form-control" id="searchInput" placeholder="Buscar usuario">
     </div>
     <!-- Tabla de usuarios -->
-    <a href="http://127.0.0.1:8000/create" class="btn btn-sm btn-success me-1" style="float:right">
-                <i class="fas fa-save"></i> Agregar
-            </a>
+    <a href="{{ route('usuarios.create') }}" class="btn btn-sm btn-success me-1" style="float:right">
+      <i class="fas fa-save"></i> Agregar
+  </a>
+  
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -30,8 +30,10 @@
           <th>Telefono</th>
           <th>Direccion</th>
           <th>Email</th>
+          @can('todo')
           <th>Rol</th>
           <th>Acciones</th>
+          @endcan
         </tr>
       </thead>
       <tbody>
@@ -44,17 +46,18 @@
             <td>{{ $usuario->telefono }}</td>
             <td>{{ $usuario->direccion }}</td>
             <td>{{ $usuario->email }}</td>
+            @can('todo')
           <td class="d-flex justify-content-end">
            
             <a href="{{ route('usuarios.crear',$usuario->id) }}" class="btn btn-sm btn-primary me-1">
                 <i class="fas fa-edit"></i> Editar
             </a>
-          
             <a href="{{ route('usuarios.destroy',$usuario->id) }}" class="btn btn-sm btn-danger">
                 <i class="fas fa-trash"></i> Eliminar
             </a>
             
           </td>
+          @endcan
         </tr>
         @endforeach
         <!-- Agrega más filas de usuarios aquí -->
